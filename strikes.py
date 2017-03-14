@@ -91,6 +91,7 @@ while True:
 
             # move predefined stripe to the image
             image[cislo] = list(colors[farba])
+            
             # start a timer for this line
             timer[cislo] = 12
     
