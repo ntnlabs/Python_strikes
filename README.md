@@ -1,2 +1,2 @@
-# Python_strikes
-Colorfull strikes, python script, for raspberry pi
+# Python strikes
+Colorfull strikes, python script, for raspberry pi with HAT attached
