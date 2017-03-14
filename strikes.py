@@ -28,7 +28,7 @@ sense = SenseHat()
 sense.set_rotation(180)
 sense.clear()
 
-# define colors
+# define many colors
 w = (0,0,0)
 r1 = (255,0,0)
 r2 = (192,0,0)
@@ -42,13 +42,34 @@ b1 = (0,0,255)
 b2 = (0,0,192)
 b3 = (0,0,129)
 b4 = (0,0,66)
+rb1 = (255,0,255)
+rb2 = (192,0,192)
+rb3 = (129,0,129)
+rb4 = (66,0,66)
+gb1 = (0,255,255)
+gb2 = (0,192,192)
+gb3 = (0,129,129)
+gb4 = (0,66,66)
+rg1 = (255,255,0)
+rg2 = (192,192,0)
+rg3 = (129,129,0)
+rg4 = (66,66,0)
+rgb1 = (255,255,255)
+rgb2 = (192,192,192)
+rgb3 = (129,129,129)
+rgb4 = (66,66,66)
 
-# degine stripes
+# degine more stripes
 rline = [w,w,w,w,w,w,w,w,r1,r2,r3,r4,w]
 gline = [w,w,w,w,w,w,w,w,g1,g2,g3,g4,w]
 bline = [w,w,w,w,w,w,w,w,b1,b2,b3,b4,w]
+rgline = [w,w,w,w,w,w,w,w,rg1,rg2,rg3,rg4,w]
+gbline = [w,w,w,w,w,w,w,w,gb1,gb2,gb3,gb4,w]
+rbline = [w,w,w,w,w,w,w,w,rb1,rb2,rb3,rb4,w]
+rgbline = [w,w,w,w,w,w,w,w,rgb1,rgb2,rgb3,rgb4,w]
 
 # initialisation of the variables
+colors = [rline, gline, bline, rgline, gbline, rbline, rgbline]
 line0 = [w,w,w,w,w,w,w,w,w,w,w,w,w]
 image = [line0, line0, line0, line0, line0, line0, line0, line0]
 timer = [0,0,0,0,0,0,0,0]
@@ -66,18 +87,12 @@ while True:
         if timer[cislo] == 0:
 
             # choose a color
-            farba = randint(0,2)
+            farba = randint(0,6)
 
             # move predefined stripe to the image
-            if farba == 0:
-                image[cislo] = list(rline)
-            if farba == 1:
-                image[cislo] = list(gline)
-            if farba == 2:
-                image[cislo] = list(bline)
-
+            image[cislo] = list(colors[farba])
             # start a timer for this line
-            timer[cislo] = 13
+            timer[cislo] = 12
     
     # create the image
     pixels = createline()
