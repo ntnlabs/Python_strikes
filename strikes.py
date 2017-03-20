@@ -2,6 +2,7 @@
 from sense_hat import SenseHat
 from time import sleep
 from random import randint
+import argparse
 
 # function to move items in an array to left and fill with "w", do not rotate if line has no stripe
 def rotateline ():
@@ -27,6 +28,39 @@ def tick():
 sense = SenseHat()
 sense.set_rotation(180)
 sense.clear()
+
+# command line arguments setup
+parser = argparse.ArgumentParser(description="Shows colorfull stripes on Sense HAT LEDs")
+
+# we make the color option mandatory
+parser.add_argument("color", choices=["r", "g", "b", "rg", "rb", "gb", "rgb", "rgbx"], help="select color mode: red, green, blue, red+green, red+blue, green+blue, red+green+blue, red+green+blue and combinations")
+
+# option to move stripes left or right
+groupdirection = parser.add_mutually_exclusive_group()
+groupdirection.add_argument("-l", "--left", help="stripes move to the left", action="store_true")
+groupdirection.add_argument("-r", "--right", help="stripes move to the right", action="store_true")
+
+# option to move stripes faster or slower
+groupspeed = parser.add_mutually_exclusive_group()
+groupspeed.add_argument("-f", "--fast", help="stripes move fast", action="store_true")
+groupspeed.add_argument("-s", "--slow", help="stripes move slow", action="store_true")
+
+# parse the arguments
+args = parser.parse_args()
+
+# check the left/right argument (left is default, because my raspberry is rotated upside down)
+if args.left:
+    sense.set_rotation(0)
+else:
+    sense.set_rotation(180)
+
+# check the fast/slow argument (default is normal speed)
+if args.fast:
+    speed = 0.05
+elif args.slow:
+    speed = 0.2
+else:
+    speed = 0.1
 
 # define many colors
 w = (0,0,0)
@@ -68,8 +102,25 @@ gbline = [w,w,w,w,w,w,w,w,gb1,gb2,gb3,gb4,w]
 rbline = [w,w,w,w,w,w,w,w,rb1,rb2,rb3,rb4,w]
 rgbline = [w,w,w,w,w,w,w,w,rgb1,rgb2,rgb3,rgb4,w]
 
-# initialisation of the variables
-colors = [rline, gline, bline, rgline, gbline, rbline, rgbline]
+# setup colors the way the user enters into command line parameters
+if args.color == "r":
+    colors = [rline]
+elif args.color == "g":
+    colors = [gline]
+elif args.color == "b":
+    colors = [bline]
+elif args.color == "rg":
+    colors = [rline, gline]
+elif args.color == "rb":
+    colors = [rline, bline]
+elif args.color == "gb":
+    colors = [gline, bline]
+elif args.color == "rgb":
+    colors = [rline, gline, bline]
+else:
+    colors = [rline, gline, bline, rgline, gbline, rbline, rgbline]
+
+# initialisation of variables
 line0 = [w,w,w,w,w,w,w,w,w,w,w,w,w]
 image = [line0, line0, line0, line0, line0, line0, line0, line0]
 timer = [0,0,0,0,0,0,0,0]
@@ -86,8 +137,8 @@ while True:
         # if there is already a stripe on this line, do nothing
         if timer[cislo] == 0:
 
-            # choose a color
-            farba = randint(0,6)
+            # choose a color from the array, we dont know how many colors so we do this dynamically
+            farba = randint(0,len(colors)-1)
 
             # move predefined stripe to the image
             image[cislo] = list(colors[farba])
@@ -108,4 +159,4 @@ while True:
     tick()
 
     # wait
-    sleep(0.1)
+    sleep(speed)
