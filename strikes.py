@@ -4,7 +4,7 @@ from time import sleep
 from random import randint
 import argparse
 
-# function to move items in an array to left and fill with "w", do not rotate if line has no stripe
+# function to move items in an array to the left and fill with "w", do not rotate if line has no stripe
 def rotateline ():
     for i in range(8):
         if timer[i] > 0:
