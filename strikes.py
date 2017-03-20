@@ -102,7 +102,7 @@ gbline = [w,w,w,w,w,w,w,w,gb1,gb2,gb3,gb4,w]
 rbline = [w,w,w,w,w,w,w,w,rb1,rb2,rb3,rb4,w]
 rgbline = [w,w,w,w,w,w,w,w,rgb1,rgb2,rgb3,rgb4,w]
 
-# setup colors the way the user enters into command line parameters
+# setup colors the way the user enters into command line parameters (default is all colors)
 if args.color == "r":
     colors = [rline]
 elif args.color == "g":
