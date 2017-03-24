@@ -1,2 +1,2 @@
 # Python strikes
-Colorfull strikes, python script, for raspberry pi with Sense HAT attached
+Colorfull strikes, made with a python script, for raspberry pi with sense HAT attached, now witch command line switches.
